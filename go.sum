@@ -6,6 +6,8 @@ github.com/jonathanhecl/chunker v0.0.1 h1:PlQO5LFwbTJWp8Q1H3aD+qZgUTLGJsllSLUZ6Q
 github.com/jonathanhecl/chunker v0.0.1/go.mod h1:yQtRleiz4mPLSmRDJ4MRrG4YxZksl4uA+D1OLgM4pxI=
 github.com/jonathanhecl/gollama v1.0.26 h1:0WQlK4E9cmu74M8s9+1nckBtlEpWEdNRd6sADEDuKkw=
 github.com/jonathanhecl/gollama v1.0.26/go.mod h1:NSNoKEtDf/MpGN7zK/BM87Zcmrv7tE6kzJ29vKzYMhE=
+github.com/jonathanhecl/gollama v1.0.27 h1:q2BqB/7b0TPrWNiAYEXu3AAjXFSWs08yAJ/bfk+fzAc=
+github.com/jonathanhecl/gollama v1.0.27/go.mod h1:NSNoKEtDf/MpGN7zK/BM87Zcmrv7tE6kzJ29vKzYMhE=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=

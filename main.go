@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	version   string = "0.0.1"
+	version   string = "0.0.2"
 	maxLength int64  = 1024 * 128
 )
 
@@ -23,6 +23,7 @@ func main() {
 		return
 	}
 
+	ctx := context.Background()
 	m := gollama.New("command-r7b")
 	m.SetTemperature(1)
 	m.SetContextLength(maxLength)
@@ -38,13 +39,13 @@ func main() {
 
 	fmt.Println("Extracting Description... (length:", len(desc), ")")
 
-	res, err := m.Chat(context.Background(), `
-	Extract the main topic (with details) from the following description:
-	"`+desc+`"
+	res, err := m.Chat(ctx, `
+Extract the main topic (with details) from the following description:
+"`+desc+`"
 
-	Avoid information about social media and disclaimers.
-	Avoid interpretations.
-	If the description is empty, respond with "No description".
+Avoid information about social media and disclaimers.
+Avoid interpretations.
+If the description is empty, respond with "No description".
 	`)
 
 	if err != nil {
@@ -60,14 +61,14 @@ func main() {
 	resume := ""
 	if len(data) < int(maxLength) {
 
-		res1, err := m.Chat(context.Background(), `
-		Create a summary of the topics discussed in this video transcript:
-		"`+data+`"
+		res1, err := m.Chat(ctx, `
+Create a summary of the topics discussed in this video transcript:
+"`+data+`"
 
-		This is the short description of the video:
-		"`+desc+`"
+This is the short description of the video:
+"`+desc+`"
 
-		SUMMARY:`)
+SUMMARY:`)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -78,14 +79,14 @@ func main() {
 
 		for _, chunk := range chunk.Chunk(data) {
 
-			res1, err := m.Chat(context.Background(), `
-		Create a summary of the topics discussed in this video transcript:
-		"`+chunk+`"
+			res1, err := m.Chat(ctx, `
+Create a summary of the topics discussed in this video transcript:
+"`+chunk+`"
 
-		This is the short description of the video:
-		"`+desc+`"
+This is the short description of the video:
+"`+desc+`"
 
-		SUMMARY:`)
+SUMMARY:`)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -101,17 +102,15 @@ func main() {
 		Topics []string `json:"topics"`
 	}
 
-	prompt := `Make a synthesis in clear points of the previous summary in Spanish:
-"` + resume + `"
+	r := gollama.StructToStructuredFormat(ResTopics{})
+
+	res2, err := m.Chat(ctx, `Make a synthesis in clear points of the previous summary in Spanish:
+"`+resume+`"
 
 - Don't do a literal translation.
 - Only the video topics (up to 3 words).
 - No conclusions or analysis.
-- Respond in JSON`
-
-	r, _ := gollama.StructToStructuredFormat(ResTopics{})
-
-	res2, err := m.Chat(context.Background(), prompt, r)
+- Respond in JSON`, r)
 	if err != nil {
 		log.Fatal(err)
 	}

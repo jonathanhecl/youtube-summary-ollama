@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/xml"
 	"errors"
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -28,17 +29,26 @@ type transcript struct {
 	} `xml:"text"`
 }
 
-func getTranscription(videoID string) (*Transcription, error) {
+func getTranscription(videoID string) (*Transcription, string, error) {
+	var description string
 	content, err := _getHTML("https://www.youtube.com/watch?v=" + videoID)
 	if err != nil {
-		return nil, err
+		return nil, description, err
 	}
 
-	var re = regexp.MustCompile(`(?m){"captionTracks":\[{"baseUrl":"([a-zA-Z0-9\\:.,\-/?=]*)","name"`)
-	matches := re.FindStringSubmatch(content)
+	var re1 = regexp.MustCompile(`(?m)"attributedDescription":{"content":"([^"]*)","commandRuns":\[{"startIndex"`)
+	matches := re1.FindStringSubmatch(content)
+
+	if len(matches) == 2 {
+		description = matches[1]
+	}
+
+	var re2 = regexp.MustCompile(`(?m){"captionTracks":\[{"baseUrl":"([a-zA-Z0-9\\:.,_\-/?=]*)","name"`)
+	matches = re2.FindStringSubmatch(content)
 
 	if len(matches) < 2 {
-		return nil, errors.New("No matches found")
+		fmt.Println(matches)
+		return nil, description, errors.New("No matches found")
 	}
 
 	urlCaptions := matches[1]
@@ -46,13 +56,13 @@ func getTranscription(videoID string) (*Transcription, error) {
 
 	content, err = _getHTML(urlCaptions)
 	if err != nil {
-		return nil, err
+		return nil, description, err
 	}
 
 	var t transcript
 	err = xml.Unmarshal([]byte(content), &t)
 	if err != nil {
-		return nil, err
+		return nil, description, err
 	}
 
 	captions := make([]Caption, len(t.Text))
@@ -67,5 +77,15 @@ func getTranscription(videoID string) (*Transcription, error) {
 		}
 	}
 
-	return &Transcription{Caption: captions}, nil
+	return &Transcription{Caption: captions}, description, nil
+}
+
+func (t *Transcription) GetText() string {
+	text := ""
+
+	for _, caption := range t.Caption {
+		text += caption.Text + " "
+	}
+
+	return text
 }

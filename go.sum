@@ -2,6 +2,8 @@ aqwari.net/xml v0.0.0-20210331023308-d9421b293817 h1:+3Rh5EaTzNLnzWx3/uy/mAaH/dG
 aqwari.net/xml v0.0.0-20210331023308-d9421b293817/go.mod h1:c7kkWzc7HS/t8Q2DcVY8P2d1dyWNEhEVT5pL0ZHO11c=
 github.com/dougbarrett/youtube-transcript v0.0.2 h1:o3T1j2wv5i802sVrydBmNJmQTcGHdlpjZbtjgSas6pQ=
 github.com/dougbarrett/youtube-transcript v0.0.2/go.mod h1:AinW4feIZ1vhBrMAsTjCwLHNLdEigA5j968USzeFzNs=
+github.com/jonathanhecl/chunker v0.0.1 h1:PlQO5LFwbTJWp8Q1H3aD+qZgUTLGJsllSLUZ6QcDkaE=
+github.com/jonathanhecl/chunker v0.0.1/go.mod h1:yQtRleiz4mPLSmRDJ4MRrG4YxZksl4uA+D1OLgM4pxI=
 github.com/jonathanhecl/gollama v1.0.26 h1:0WQlK4E9cmu74M8s9+1nckBtlEpWEdNRd6sADEDuKkw=
 github.com/jonathanhecl/gollama v1.0.26/go.mod h1:NSNoKEtDf/MpGN7zK/BM87Zcmrv7tE6kzJ29vKzYMhE=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=

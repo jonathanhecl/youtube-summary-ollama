@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	version   string = "0.0.2"
+	version   string = "0.0.3"
 	maxLength int64  = 1024 * 128
 )
 
@@ -24,7 +24,7 @@ func main() {
 	}
 
 	ctx := context.Background()
-	m := gollama.New("command-r7b")
+	m := gollama.New("deepseek-r1:8b")
 	m.SetTemperature(1)
 	m.SetContextLength(maxLength)
 
